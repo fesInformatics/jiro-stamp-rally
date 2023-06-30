@@ -1,4 +1,4 @@
-package main
+package infrastructure
 
 import (
 	"time"
@@ -10,7 +10,7 @@ func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Jiro!\n"))
 }
 
-func main() {
+func Run() {
 
 	http.HandleFunc("/health", HealthCheck)
 
