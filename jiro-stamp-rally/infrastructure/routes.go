@@ -1,16 +1,23 @@
 package infrastructure
 
 import (
+	"encoding/json"
+	"github.com/fesInformatics/jiro-stamp-rally/jiro-stamp-rally/interface/controller"
 	"time"
 	"net/http"
 	"fmt"
 )
 
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Jiro!\n"))
+	controller := controller.NewHealthcheckController()
+	
+	if err := json.NewEncoder(w).Encode(controller.Get()); err != nil {
+		fmt.Printf("エンコードエラー")
+	}
 }
 
 func Run() {
+
 
 	http.HandleFunc("/health", HealthCheck)
 
