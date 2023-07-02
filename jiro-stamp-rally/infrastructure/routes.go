@@ -1,25 +1,15 @@
 package infrastructure
 
 import (
-	"encoding/json"
 	"github.com/fesInformatics/jiro-stamp-rally/jiro-stamp-rally/interface/controller"
+	"github.com/fesInformatics/jiro-stamp-rally/jiro-stamp-rally/interface/context"
 	"time"
 	"net/http"
 	"fmt"
 )
 
-func HealthCheck(w http.ResponseWriter, r *http.Request) {
-	controller := controller.NewHealthcheckController()
-	
-	if err := json.NewEncoder(w).Encode(controller.Get()); err != nil {
-		fmt.Printf("エンコードエラー")
-	}
-}
-
 func Run() {
-
-
-	http.HandleFunc("/health", HealthCheck)
+	http.HandleFunc("/health", healthCheck)
 
 	s := http.Server{
 		Addr: ":8080",
@@ -36,4 +26,10 @@ func Run() {
 			panic(err)
 		}
 	}
+}
+
+func healthCheck(w http.ResponseWriter, r *http.Request) {
+	controller := controller.NewHealthcheckController()
+	ctx := context.NewContext(w, r)
+	controller.Get(ctx)
 }

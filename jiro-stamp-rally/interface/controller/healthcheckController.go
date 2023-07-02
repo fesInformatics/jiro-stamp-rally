@@ -1,11 +1,16 @@
 package controller
 
+import (
+	"github.com/fesInformatics/jiro-stamp-rally/jiro-stamp-rally/interface/context"
+)
+
 type HealthcheckController struct {}
 
-func (c HealthcheckController) Get() Healthcheck {
-	return Healthcheck {
+func (c HealthcheckController) Get(ctx context.Context) {
+	r := Healthcheck {
 		Message: "OK",
 	}
+	ctx.JSON(r)
 }
 
 func NewHealthcheckController () HealthcheckController {
