@@ -14,3 +14,7 @@ Dokcer, DockerComposeがインストールされている前提です。
 ```bash
 docker compose logs -f app
 ```
+
+`http://localhost:3000/health`をブラウザで開いて、`{"message":"OK"}`が表示されることを確認してください。
+
+Airはファイルの変更検知してホットリロードします。
