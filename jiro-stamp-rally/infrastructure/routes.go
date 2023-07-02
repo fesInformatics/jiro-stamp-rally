@@ -1,8 +1,8 @@
 package infrastructure
 
 import (
-	"github.com/fesInformatics/jiro-stamp-rally/jiro-stamp-rally/interface/controller"
-	"github.com/fesInformatics/jiro-stamp-rally/jiro-stamp-rally/interface/context"
+	"github.com/fesInformatics/jiro-stamp-rally/interface/controller"
+	"github.com/fesInformatics/jiro-stamp-rally/interface/context"
 	"time"
 	"net/http"
 	"fmt"

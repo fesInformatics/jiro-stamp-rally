@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/fesInformatics/jiro-stamp-rally/jiro-stamp-rally/interface/context"
+	"github.com/fesInformatics/jiro-stamp-rally/interface/context"
 )
 
 type HealthcheckController struct {}
