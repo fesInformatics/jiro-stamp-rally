@@ -12,7 +12,7 @@ Dokcer, DockerComposeがインストールされている前提です。
 以下のコマンドで[Air](https://github.com/cosmtrek/air)が起動します。
 
 ```bash
-docker compose logs -f app
+docker compose up -d
 ```
 
 `http://localhost:3000/health`をブラウザで開いて、`{"message":"OK"}`が表示されることを確認してください。
