@@ -12,7 +12,7 @@ type Context struct {
 	r  *http.Request
 }
 
-func (c Context) JSON (v interface{}) {
+func (c Context) JSON (v any) {
 	if err := json.NewEncoder(c.w).Encode(v); err != nil {
 		fmt.Printf("エンコードエラー")
 	}

@@ -9,3 +9,20 @@ services:
     volumes: 
       - ./jiro-stamp-rally:/app
     tty: true
+  mysql:
+    image: mysql:8.0.27
+    ports:
+      - 3306:3306
+    environment:
+      TZ: 
+      MYSQL_DATABASE: jiro-stamp-rally
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - mysql-data:/var/lib/mysql
+  
+volumes:
+ mysql-data:
+  driver: local
+
