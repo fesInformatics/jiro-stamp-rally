@@ -1,10 +1,11 @@
 package context
 
 import (
-	"encoding/json"
-	"net/http"
-	"fmt"
 	_context "context"
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
 )
 
 type Context struct {
@@ -20,6 +21,14 @@ func (c Context) JSON (v any) {
 
 func (c Context) CreateContext () _context.Context {
 	return c.r.Context()
+}
+
+func (c Context) GetHttpMethod() string{
+	return c.r.Method
+}
+
+func (c Context)GetBody() io.ReadCloser {
+	return c.r.Body
 }
 
 func NewContext (w http.ResponseWriter, r  *http.Request) Context {
