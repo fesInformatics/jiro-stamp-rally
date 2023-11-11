@@ -18,10 +18,13 @@ func (c UserController) Create(ctx context.Context) {
 	case http.MethodPost:
 		var user UserCreate
 		if err := json.NewDecoder(ctx.GetBody()).Decode(&user); err != nil {
-			fmt.Printf("エラーで")
+			fmt.Printf("エラーです")
 		}
 		err := c.interactor.Save(user.MailAddress, user.Password)
-		fmt.Println(err)
+		if err != nil {
+			fmt.Printf("エラーです")
+		}
+		ctx.JSON(http.StatusCreated, nil)
 	default:
 		fmt.Printf("許可されていないメソットです")
 	}

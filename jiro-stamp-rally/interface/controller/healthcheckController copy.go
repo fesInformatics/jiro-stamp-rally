@@ -1,8 +1,9 @@
 package controller
 
 import (
-	"github.com/fesInformatics/jiro-stamp-rally/interface/context"
+	"net/http"
 
+	"github.com/fesInformatics/jiro-stamp-rally/interface/context"
 )
 
 type HealthcheckController struct {}
@@ -11,7 +12,7 @@ func (c HealthcheckController) Get(ctx context.Context) {
 	r := Healthcheck {
 		Message: "OK",
 	}
-	ctx.JSON(r)
+	ctx.JSON(http.StatusOK, r)
 }
 
 func NewHealthcheckController () HealthcheckController {

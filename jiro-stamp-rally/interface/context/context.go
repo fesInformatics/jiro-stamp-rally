@@ -13,9 +13,13 @@ type Context struct {
 	r  *http.Request
 }
 
-func (c Context) JSON (v any) {
-	if err := json.NewEncoder(c.w).Encode(v); err != nil {
-		fmt.Printf("エンコードエラー")
+func (c Context) JSON (code int, v any) {
+	c.w.Header().Set("Contetnt-Type","application/json; charset=utf-8")
+	c.w.WriteHeader(code)
+	if v != nil {
+		if err := json.NewEncoder(c.w).Encode(v); err != nil {
+			fmt.Printf("エンコードエラー")
+		}
 	}
 }
 
