@@ -30,5 +30,7 @@ migrate -database="mysql://$DB_USER:$DB_PASSWORD@tcp(mysql:$DB_PORT)/$DB_DATABAS
 migrate -database="mysql://$DB_USER:$DB_PASSWORD@tcp(mysql:$DB_PORT)/$DB_DATABASE?multiStatements=true" -path=jiro-stamp-rally/db/migrations/ version
 マイグレーション force※
 migrate -database="mysql://$DB_USER:$DB_PASSWORD@tcp(mysql:$DB_PORT)/$DB_DATABASE?multiStatements=true" -path=jiro-stamp-rally/db/migrations/ force 1
+マイグレーションファイル作成
+migrate create -ext sql -dir /jiro-stamp-rally/db/migrations -seq [マイレーションファイル名]
 ```
 ※マイグレーションの際にSQLの実行に失敗するとバージョンがdirtyになりマイグレーション操作が行えなくなる。forceをすると、強制的にdirtyを外すことができる。
