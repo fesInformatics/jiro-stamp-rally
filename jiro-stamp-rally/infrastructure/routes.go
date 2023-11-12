@@ -5,11 +5,12 @@ import (
 	"net/http"
 	"time"
 
+	dbconfig "github.com/fesInformatics/jiro-stamp-rally/infrastructure/config"
+	"github.com/fesInformatics/jiro-stamp-rally/infrastructure/db"
 	repository "github.com/fesInformatics/jiro-stamp-rally/infrastructure/gateway"
 	"github.com/fesInformatics/jiro-stamp-rally/interface/context"
 	"github.com/fesInformatics/jiro-stamp-rally/interface/controller"
 	"github.com/fesInformatics/jiro-stamp-rally/usecase/interactor"
-	"github.com/fesInformatics/jiro-stamp-rally/infrastructure/db"
 )
 
 func Run() {
@@ -40,7 +41,7 @@ func healthCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func createUser(w http.ResponseWriter, r *http.Request) {
-	controller := controller.NewUserController(interactor.NewUserInteactor(repository.NewUserRespository(client.NewDbClient())))
+	controller := controller.NewUserController(interactor.NewUserInteactor(repository.NewUserRespository(client.NewDbClient(dbconfig.NewDBConfig()))))
 	ctx := context.NewContext(w, r)
 	controller.Create(ctx)
 }

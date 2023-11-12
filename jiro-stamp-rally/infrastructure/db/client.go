@@ -7,17 +7,20 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	database "github.com/fesInformatics/jiro-stamp-rally/infrastructure/gateway/database"
+	"github.com/fesInformatics/jiro-stamp-rally/infrastructure/config"
 )
 
-type DbClient struct {}
+type DbClient struct{
+	config *dbconfig.DBconfig
+}
 
 func (dc *DbClient) InsertSQL(tablename string, valueMap map[string]any) error {
 	var (
 		columns string = ""
-		here string = ""
-		values = make([]any, 0, len(valueMap))
+		here    string = ""
+		values         = make([]any, 0, len(valueMap))
 	)
-	db, err := sql.Open("mysql", "user:password@tcp(mysql:3306)/jiro-stamp-rally?charset=utf8mb4")
+	db, err := connectDB()
 	if err != nil {
 		return err
 	}
@@ -25,7 +28,7 @@ func (dc *DbClient) InsertSQL(tablename string, valueMap map[string]any) error {
 	for k, v := range valueMap {
 		if columns != "" {
 			columns += ","
-		} 
+		}
 		columns += k
 		if here == "" {
 			here += "?"
@@ -39,11 +42,17 @@ func (dc *DbClient) InsertSQL(tablename string, valueMap map[string]any) error {
 	if err != nil {
 		return err
 	}
-	fmt.Printf("バリュー:%v",values...)
 	_, err = ins.Exec(values...)
 	return err
 }
 
-func NewDbClient() database.DbClient {
-	return &DbClient{}
+func (dc *DbClient) connectDB() (*sql.DB, error) {
+	// return sql.Open("mysql", fmt.Sprintf("user:password@tcp(mysql:3306)/jiro-stamp-rally?charset=utf8mb4", dc.config.User, dc.config.Password, dc.config.Port, dc.config.DBName ))
+	return sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4", dc.config.User, dc.config.Password, dc.config.Host, dc.config.Port, dc.config.DBName ))
+}
+
+func NewDbClient(config *dbconfig.DBconfig) database.DbClient {
+	return &DbClient{
+		config: config,
+	}
 }
