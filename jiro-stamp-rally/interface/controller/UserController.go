@@ -14,7 +14,7 @@ type UserController struct {
 }
 
 func (c UserController) Create(ctx context.Context) {
-	switch ctx. GetHttpMethod(){
+	switch ctx.GetHttpMethod() {
 	case http.MethodPost:
 		var user UserCreate
 		if err := json.NewDecoder(ctx.GetBody()).Decode(&user); err != nil {
@@ -30,11 +30,11 @@ func (c UserController) Create(ctx context.Context) {
 	}
 }
 
-func NewUserController (interactor interactor.UserInteractor) UserController {
-	return UserController{ interactor: interactor}
+func NewUserController(interactor interactor.UserInteractor) UserController {
+	return UserController{interactor: interactor}
 }
 
 type UserCreate struct {
 	MailAddress string `json:"mailAddress"`
-	Password string `json:"password"`
+	Password    string `json:"password"`
 }

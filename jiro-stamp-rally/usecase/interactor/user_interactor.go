@@ -4,12 +4,11 @@ import (
 	"github.com/fesInformatics/jiro-stamp-rally/usecase/repository"
 )
 
-
 type UserInteractor struct {
 	repository repository.UserRepository
 }
 
-func (i *UserInteractor) Save(mailAddress string, Password string) error{
+func (i *UserInteractor) Save(mailAddress string, Password string) error {
 	return i.repository.Save(mailAddress, Password)
 }
 

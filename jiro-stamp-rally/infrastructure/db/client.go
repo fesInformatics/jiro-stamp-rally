@@ -6,11 +6,11 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 
-	database "github.com/fesInformatics/jiro-stamp-rally/infrastructure/gateway/database"
 	"github.com/fesInformatics/jiro-stamp-rally/infrastructure/config"
+	database "github.com/fesInformatics/jiro-stamp-rally/infrastructure/gateway/database"
 )
 
-type DbClient struct{
+type DbClient struct {
 	config *dbconfig.DBconfig
 }
 
@@ -47,7 +47,7 @@ func (dc *DbClient) InsertSQL(tablename string, valueMap map[string]any) error {
 }
 
 func (dc *DbClient) connectDB() (*sql.DB, error) {
-	return sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4", dc.config.User, dc.config.Password, dc.config.Host, dc.config.Port, dc.config.DBName ))
+	return sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4", dc.config.User, dc.config.Password, dc.config.Host, dc.config.Port, dc.config.DBName))
 }
 
 func NewDbClient(config *dbconfig.DBconfig) database.DbClient {

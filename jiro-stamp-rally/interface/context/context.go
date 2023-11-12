@@ -8,11 +8,11 @@ import (
 
 type Context struct {
 	w http.ResponseWriter
-	r  *http.Request
+	r *http.Request
 }
 
-func (c *Context) JSON (code int, v any) {
-	c.w.Header().Set("Contetnt-Type","application/json; charset=utf-8")
+func (c *Context) JSON(code int, v any) {
+	c.w.Header().Set("Contetnt-Type", "application/json; charset=utf-8")
 	c.w.WriteHeader(code)
 	if v != nil {
 		if err := json.NewEncoder(c.w).Encode(v); err != nil {
@@ -21,27 +21,27 @@ func (c *Context) JSON (code int, v any) {
 	}
 }
 
-func (c *Context) BadRequest (err error) {
+func (c *Context) BadRequest(err error) {
 	c.JSON(http.StatusBadRequest, ErrorResponse{StatusCode: http.StatusBadRequest, Message: err.Error()})
 }
 
-func (c *Context) MethodNotAllowed (err error) {
+func (c *Context) MethodNotAllowed(err error) {
 	c.JSON(http.StatusMethodNotAllowed, ErrorResponse{StatusCode: http.StatusMethodNotAllowed, Message: err.Error()})
 }
 
-func (c *Context) InternalServerError (err error) {
+func (c *Context) InternalServerError(err error) {
 	c.JSON(http.StatusInternalServerError, ErrorResponse{StatusCode: http.StatusInternalServerError, Message: err.Error()})
 }
 
-func (c Context) GetHttpMethod() string{
+func (c Context) GetHttpMethod() string {
 	return c.r.Method
 }
 
-func (c Context)GetBody() io.ReadCloser {
+func (c Context) GetBody() io.ReadCloser {
 	return c.r.Body
 }
 
-func NewContext (w http.ResponseWriter, r  *http.Request) Context {
+func NewContext(w http.ResponseWriter, r *http.Request) Context {
 	return Context{
 		w: w,
 		r: r,
@@ -49,6 +49,6 @@ func NewContext (w http.ResponseWriter, r  *http.Request) Context {
 }
 
 type ErrorResponse struct {
-	StatusCode int `json:"statusCode"`
-	Message string `json:"message"`
+	StatusCode int    `json:"statusCode"`
+	Message    string `json:"message"`
 }
