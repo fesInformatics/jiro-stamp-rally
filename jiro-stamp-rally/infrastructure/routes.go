@@ -15,7 +15,7 @@ import (
 
 func Run() {
 	http.HandleFunc("/health", healthCheck)
-	http.HandleFunc("/user", createUser)
+	http.HandleFunc("/user/register", createUser)
 
 	s := http.Server{
 		Addr: ":8080",
