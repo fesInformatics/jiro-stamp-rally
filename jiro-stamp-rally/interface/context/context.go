@@ -26,7 +26,7 @@ func (c *Context) BadRequest (err error) {
 }
 
 func (c *Context) MethodNotAllowed (err error) {
-	c.JSON(http.StatusMethodNotAllowed, ErrorResponse{StatusCode: http.StatusBadRequest, Message: err.Error()})
+	c.JSON(http.StatusMethodNotAllowed, ErrorResponse{StatusCode: http.StatusMethodNotAllowed, Message: err.Error()})
 }
 
 func (c *Context) InternalServerError (err error) {
