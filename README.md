@@ -9,6 +9,10 @@
 
 Dokcer, DockerComposeがインストールされている前提です。
 
+```bash
+cp .env.example .env
+```
+
 以下のコマンドで[Air](https://github.com/cosmtrek/air)が起動します。
 
 ```bash
@@ -20,6 +24,11 @@ docker compose up -d
 Airはファイルの変更検知してホットリロードします。
 
 ## マイグレーション方法
+以下のコマンドでworkspaceコンテナに入って、コマンドを実行してください。
+
+```
+docker compose exec workspace sh
+```
 
 ```sh
 マイグレーション up
