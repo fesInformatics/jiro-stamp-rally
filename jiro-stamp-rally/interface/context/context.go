@@ -21,11 +21,15 @@ func (c *Context) JSON (code int, v any) {
 	}
 }
 
-func (c Context) BadRequest (err error) {
+func (c *Context) BadRequest (err error) {
 	c.JSON(http.StatusBadRequest, ErrorResponse{StatusCode: http.StatusBadRequest, Message: err.Error()})
 }
 
-func (c Context) InternalServerError (err error) {
+func (c *Context) MethodNotAllowed (err error) {
+	c.JSON(http.StatusMethodNotAllowed, ErrorResponse{StatusCode: http.StatusBadRequest, Message: err.Error()})
+}
+
+func (c *Context) InternalServerError (err error) {
 	c.JSON(http.StatusInternalServerError, ErrorResponse{StatusCode: http.StatusInternalServerError, Message: err.Error()})
 }
 
