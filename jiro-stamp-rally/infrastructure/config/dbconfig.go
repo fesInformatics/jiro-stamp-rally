@@ -14,12 +14,12 @@ type DBconfig struct {
 }
 
 func NewDBConfig() *DBconfig {
-	port, _ := strconv.Atoi(os.Getenv("PORT"))
+	port, _ := strconv.Atoi(os.Getenv("DB_PORT"))
 	return &DBconfig{
-		Host:     os.Getenv("HOST"),
+		Host:     os.Getenv("DB_HOST"),
 		Port:     port,
-		DBName:   os.Getenv("DBNAME"),
-		User:     os.Getenv("USER"),
-		Password: os.Getenv("PASSWORD"),
+		DBName:   os.Getenv("DB_DATABASE"),
+		User:     os.Getenv("DB_USER"),
+		Password: os.Getenv("DB_PASSWORD"),
 	}
 }

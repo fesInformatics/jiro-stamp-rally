@@ -20,7 +20,7 @@ func (dc *DbClient) InsertSQL(tablename string, valueMap map[string]any) error {
 		here    string = ""
 		values         = make([]any, 0, len(valueMap))
 	)
-	db, err := connectDB()
+	db, err := dc.connectDB()
 	if err != nil {
 		return err
 	}
@@ -47,7 +47,6 @@ func (dc *DbClient) InsertSQL(tablename string, valueMap map[string]any) error {
 }
 
 func (dc *DbClient) connectDB() (*sql.DB, error) {
-	// return sql.Open("mysql", fmt.Sprintf("user:password@tcp(mysql:3306)/jiro-stamp-rally?charset=utf8mb4", dc.config.User, dc.config.Password, dc.config.Port, dc.config.DBName ))
 	return sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4", dc.config.User, dc.config.Password, dc.config.Host, dc.config.Port, dc.config.DBName ))
 }
 
