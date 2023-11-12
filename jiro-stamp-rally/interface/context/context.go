@@ -1,9 +1,7 @@
 package context
 
 import (
-	_context "context"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 )
@@ -13,18 +11,22 @@ type Context struct {
 	r  *http.Request
 }
 
-func (c Context) JSON (code int, v any) {
+func (c *Context) JSON (code int, v any) {
 	c.w.Header().Set("Contetnt-Type","application/json; charset=utf-8")
 	c.w.WriteHeader(code)
 	if v != nil {
 		if err := json.NewEncoder(c.w).Encode(v); err != nil {
-			fmt.Printf("エンコードエラー")
+			c.InternalServerError(err)
 		}
 	}
 }
 
-func (c Context) CreateContext () _context.Context {
-	return c.r.Context()
+func (c Context) BadRequest (err error) {
+	c.JSON(http.StatusBadRequest, ErrorResponse{StatusCode: http.StatusBadRequest, Message: err.Error()})
+}
+
+func (c Context) InternalServerError (err error) {
+	c.JSON(http.StatusInternalServerError, ErrorResponse{StatusCode: http.StatusInternalServerError, Message: err.Error()})
 }
 
 func (c Context) GetHttpMethod() string{
@@ -42,3 +44,7 @@ func NewContext (w http.ResponseWriter, r  *http.Request) Context {
 	}
 }
 
+type ErrorResponse struct {
+	StatusCode int `json:"statusCode"`
+	Message string `json:"message"`
+}
