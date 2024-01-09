@@ -17,6 +17,7 @@ services:
     tty: true
   mysql:
     image: mysql:8.0.27
+    platform: linux/amd64
     ports:
       - 3306:3306
     environment:
