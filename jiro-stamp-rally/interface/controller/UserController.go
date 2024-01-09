@@ -21,6 +21,7 @@ func (c UserController) Create(ctx context.Context) {
 			ctx.BadRequest(err)
 		}
 		err := c.interactor.Save(user.MailAddress, user.Password)
+		// TODO 重複エラーを別途定義してその場合にはbadrequestを返すようにする
 		if err != nil {
 			ctx.InternalServerError(err)
 		}
