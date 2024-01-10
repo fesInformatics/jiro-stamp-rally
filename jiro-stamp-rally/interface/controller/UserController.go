@@ -22,7 +22,11 @@ func (c UserController) Create(ctx context.Context) {
 		}
 		err := c.interactor.Save(user.MailAddress, user.Password)
 		// TODO 重複エラーを別途定義してその場合にはbadrequestを返すようにする
+		//if err != nil && err.(*errors.UserDuplicateError) != nil {
+		//	ctx.InternalServerError(err)
+		//}
 		if err != nil {
+
 			ctx.InternalServerError(err)
 		}
 		ctx.JSON(http.StatusCreated, nil)

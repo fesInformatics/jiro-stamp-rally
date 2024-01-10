@@ -1,6 +1,7 @@
 package client
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 
@@ -16,9 +17,9 @@ type DbClient struct {
 
 func (dc *DbClient) InsertSQL(tablename string, valueMap map[string]any) error {
 	var (
-		columns string = ""
-		here    string = ""
-		values         = make([]any, 0, len(valueMap))
+		columns = ""
+		here    = ""
+		values  = make([]any, 0, len(valueMap))
 	)
 	db, err := dc.connectDB()
 	if err != nil {
@@ -39,11 +40,25 @@ func (dc *DbClient) InsertSQL(tablename string, valueMap map[string]any) error {
 	}
 
 	ins, err := db.Prepare(fmt.Sprintf("INSERT INTO %s(%s) VALUES(%s)", tablename, columns, here))
+	defer ins.Close()
 	if err != nil {
 		return err
 	}
 	_, err = ins.Exec(values...)
 	return err
+}
+func (dc *DbClient) SelectSQL(query string) (*sql.Rows, error) {
+	db, err := dc.connectDB()
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := db.QueryContext(context.Background(), query)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
 }
 
 func (dc *DbClient) connectDB() (*sql.DB, error) {

@@ -1,6 +1,7 @@
 package interactor
 
 import (
+	"github.com/fesInformatics/jiro-stamp-rally/usecase/errors"
 	"github.com/fesInformatics/jiro-stamp-rally/usecase/repository"
 )
 
@@ -9,6 +10,13 @@ type UserInteractor struct {
 }
 
 func (i *UserInteractor) Save(mailAddress string, Password string) error {
+	exists, err := i.repository.ExistsByMailAddress(mailAddress)
+	if err != nil {
+		return err
+	}
+	if exists {
+		return &errors.UserDuplicateError{}
+	}
 	return i.repository.Save(mailAddress, Password)
 }
 
