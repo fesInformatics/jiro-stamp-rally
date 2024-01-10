@@ -1,9 +1,11 @@
 package interactor
 
 import (
-	"github.com/fesInformatics/jiro-stamp-rally/usecase/errors"
+	"errors"
 	"github.com/fesInformatics/jiro-stamp-rally/usecase/repository"
 )
+
+var ErrUserDuplicate = errors.New("user is duplicate")
 
 type UserInteractor struct {
 	repository repository.UserRepository
@@ -15,7 +17,7 @@ func (i *UserInteractor) Save(mailAddress string, Password string) error {
 		return err
 	}
 	if exists {
-		return &errors.UserDuplicateError{}
+		return ErrUserDuplicate
 	}
 	return i.repository.Save(mailAddress, Password)
 }

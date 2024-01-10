@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -20,15 +21,14 @@ func (c UserController) Create(ctx context.Context) {
 		if err := json.NewDecoder(ctx.GetBody()).Decode(&user); err != nil {
 			ctx.BadRequest(err)
 		}
-		err := c.interactor.Save(user.MailAddress, user.Password)
-		// TODO 重複エラーを別途定義してその場合にはbadrequestを返すようにする
-		//if err != nil && err.(*errors.UserDuplicateError) != nil {
-		//	ctx.InternalServerError(err)
-		//}
-		if err != nil {
 
+		err := c.interactor.Save(user.MailAddress, user.Password)
+		if err != nil && errors.Is(err, interactor.ErrUserDuplicate) {
+			ctx.BadRequest(err)
+		} else if err != nil {
 			ctx.InternalServerError(err)
 		}
+
 		ctx.JSON(http.StatusCreated, nil)
 	default:
 		ctx.MethodNotAllowed(fmt.Errorf("MethodNotAllowed"))
