@@ -53,6 +53,34 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "ログイン",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"mailAddress\": \"sonobetakuro+1@gmail.com\",\n    \"password\": \"password1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

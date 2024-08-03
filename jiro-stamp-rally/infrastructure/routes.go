@@ -16,6 +16,9 @@ import (
 func Run() {
 	http.HandleFunc("/health", healthCheck)
 	http.HandleFunc("/user/register", createUser)
+	http.HandleFunc("/login", login)
+
+	
 
 	s := http.Server{
 		Addr: ":8080",
@@ -44,4 +47,10 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	controller := controller.NewUserController(interactor.NewUserInteactor(repository.NewUserRespository(client.NewDbClient(dbconfig.NewDBConfig()))))
 	ctx := context.NewContext(w, r)
 	controller.Create(ctx)
+}
+
+func login(w http.ResponseWriter, r *http.Request) {
+	controller := controller.NewLoginController(interactor.NewLoginInteactor(repository.NewUserRespository(client.NewDbClient(dbconfig.NewDBConfig()))))
+	ctx := context.NewContext(w, r)
+	controller.Login(ctx)
 }
